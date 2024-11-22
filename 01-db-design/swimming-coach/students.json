@@ -1,0 +1,49 @@
+[
+    {
+        "_id": "1001",
+        "name": "Tan Ah Kow",
+        "dob":"2018-01-25",
+        "parent":{
+            "parent_id":"333445",
+            "name":"Tan Ah Ma",
+            "address": {
+                "street_name":"Yishun Ring Road",
+                "blk_number":"Blk 666",
+                "unit_number":"12-13"
+            },
+             "contact_number":"81231234"
+        },
+        "sessions": [
+           {
+              "session_id":"456456",
+              "datetime":"2024-11-23 10:00:00",
+              "venue":{
+                "_id":"99",
+                "name":"Yishun Swimming Complex"
+              }
+           },
+           {
+            "session_id":"456457",
+            "datetime":"2024-11-24 10:00:00",
+            "venue":{
+                 "_id":"99",
+                "name":"Yishun Swimming Complex"
+            }
+           }
+        ]
+    },
+    {
+        "_id":"1002",
+        "name":"Tan Ah Mew",
+        "parent":{
+            "parent_id":"333445",
+            "name":"Tan Ah Ma",
+            "address": {
+                "street_name":"Yishun Ring Road",
+                "blk_number":"Blk 666",
+                "unit_number":"12-13"
+            },
+             "contact_number":"81231234"
+        }
+    }
+]

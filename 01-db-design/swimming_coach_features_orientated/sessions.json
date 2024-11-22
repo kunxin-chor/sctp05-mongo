@@ -1,0 +1,23 @@
+[
+    {
+        "session_id":998,
+        "venue":{
+            "venue_id": 45,
+            "name":"Yishun Swimming Complex"
+        },
+        "student_count": 10,
+        "students":[
+            {
+                "student_id": 1111,
+                "name":"Tan Ah Kow",
+                "dob":"2020-12-25"
+            },
+            {
+                "student_id": 1112,
+                "name":"Jack Neo",
+                "dob":"2020-12-24"
+                
+            }
+        ]
+    }
+]
