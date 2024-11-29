@@ -198,3 +198,87 @@ db.listingsAndReviews.find({
     'amenities': 1
 })
 ```
+
+### Find by ObjectId
+Note: This is in the `sample_mflix` database
+```
+db.movies.find(ObjectId("573a1391f29313caabcd88d8"))
+```
+
+### Find documents by a key in an array of objects
+* `$elemMatch`: find by one item in an array (usually an object)
+    * Works for the first match
+
+```
+db.listingsAndReviews.find({
+    'reviews':{
+        '$elemMatch':{
+            'reviewer_name':'Tara'
+        }
+    }
+}, {
+    'name': 1,
+    'reviews.$':1
+})
+```
+
+### Match by string patterns
+Find all listings with the word `spacious` in the summary
+```
+db.listingsAndReviews.find({
+    'summary': {
+        '$regex':'spacious',
+        '$options': 'i'  // case insensitive
+    }
+},{
+    'name': 1,
+    'summary': 1
+})
+```
+
+### Match by dates
+Find all the listings before 2023
+```
+db.listingsAndReviews.find({
+    'first_review': {
+        '$lte':ISODate('2022-12-31')
+    }
+},{
+    'name': 1,
+    'first_review':1
+})
+```
+
+### Using logical operators
+Find all the listings in Brazil or United States
+```
+db.listingsAndReviews.find({
+    '$or':[
+        {
+            'address.country':'Brazil'
+        },
+        {
+            'address.country':'United States'
+        }
+    ]
+},{
+    'name': 1,
+    'address.country': 1
+})
+```
+
+Find all the listings NOT in brazil
+```
+db.listingsAndReviews.find({
+   {
+    'address.country': {
+        '$not':{
+            '$in':['Brazil']
+        }
+    }
+   }
+},{
+    'name': 1,
+    'address.country': 1
+})
+```
