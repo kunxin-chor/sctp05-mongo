@@ -40,7 +40,7 @@ db.animals.insertMany([
     type:"Dog"
   },
   {
-    name:'Carrot',
+    name:'Bugs',
     age: 1,
     breed:'Holland Lop',
     type:'Bunny'
@@ -74,4 +74,116 @@ db.animals.updateOne({
 db.animals.deleteOne({
     _id: ObjectId("674930ec049cd34b8962ad17")
 });
+```
+
+* Delete all (> 1 ) documents that matches the critera
+```
+db.animals.deleteMany({
+    type:'Dog'
+});
+```
+
+# Work with arrays
+
+## Add to an array
+```
+db.animals.updateOne({
+    _id:ObjectId("674937ac049cd34b8962ad1a")
+},{
+    $push:{
+        'tags':'house-broken'
+    }
+})
+```
+* If the array we are pushing to doesn't exist, MongoDB will create
+
+* Push more than one with `$each`
+
+```
+db.animals.updateOne({
+    _id:ObjectId("674937ac049cd34b8962ad1a")
+},{
+    $push:{
+        'tags': {
+            '$each':['house-broken', 'cute', 'neutered']
+        }
+    }
+})
+```
+
+
+## Delete an element from array
+```
+db.animals.updateOne({
+    '_id':ObjectId('674937ac049cd34b8962ad1a')
+}, {
+    $pull: {
+        'tags':'house-broken'
+    }
+})
+```
+* Pull 'house-broken' from the `tags` array
+
+## Updating an existing item in the array
+1. find the index of the item that we to replace
+2. then replace using `$set`
+```
+db.animals.updateOne({
+    _id:ObjectId('674937ac049cd34b8962ad1a'),
+    tags:'neutered'
+},{
+    $set:{
+        'tags.$': "fixed"
+    }
+})
+```
+* We need to indicate `tags:'neutered'` so that the `$` operator will refer to its index in the `tags` array
+
+# Working with embedded collections
+Add a `checkups` key to each of the animal that stores all the checkup.
+
+```
+db.animals.updateOne({
+    _id:ObjectId("674930ec049cd34b8962ad18")
+},{
+  $push:{
+    checkups:{
+        _id: ObjectId(),
+        name:"Dr Tan",
+        diagnosis:"Diabetes",
+        treatment:"Medication"
+    }
+  }
+})
+```
+* If we call `ObjectId()` without a parameter, MongoDB will auto generate one for us
+
+### Delete embedded document from array
+```
+db.animals.updateOne({
+    _id:ObjectId("674930ec049cd34b8962ad18")  
+},{
+    $pull:{
+        checkups:{
+            _id:ObjectId('67493b52049cd34b8962ad1d')
+        }
+    }
+})
+```
+Note: the `_id` for the matching critera doesn't work with embedded documents' _id
+
+### Update embedded document from array
+```
+db.animals.updateOne({
+    _id:ObjectId("674930ec049cd34b8962ad18"),
+    checkups:{
+        $elemMatch:{
+            _id: ObjectId("67493b08049cd34b8962ad1c")
+        }
+    }
+}, {
+    $set:{
+        'checkups.$.name':"Dr. Su"
+    }
+})
 ```
