@@ -15,3 +15,7 @@ Install with: `npm install express`
 NPM => Node Package Manager
 * Package: A third party library of source code that adds new functonality or feature
 * Why do we need NPM? Encourage code reuse.
+
+## nodemon
+* Nodemon watches all the files for changes and when a change is detected, it restarts server ==> "hot loading"
+`npm install -g nodemon`
